@@ -16,8 +16,10 @@ tmpdir="/tmp/$tmpname"
 rsh $host mkdir -p $tmpdir
 
 # 
-cat start_line > script.Rmd
-echo "load($data)" >> script.Rmd
+echo "generated from $script" > script.Rmd
+echo "======================" >> script.Rmd
+cat start_line >> script.Rmd
+echo "load(\"$data\")" >> script.Rmd
 cat $script >> script.Rmd
 cat end_line >> script.Rmd
 #mv $script 

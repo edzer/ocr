@@ -19,7 +19,10 @@ Type 'q()' to quit R.
 
 > library(knitr)
 > knit2html("script.Rmd") 
-  |                                                                         |                                                                 |   0%  |                                                                         |................................                                 |  50%
+  |                                                                         |                                                                 |   0%  |                                                                         |......................                                           |  33%
+  ordinary text without R code
+
+  |                                                                         |...........................................                      |  67%
 label: unnamed-chunk-1
   |                                                                         |.................................................................| 100%
   ordinary text without R code
