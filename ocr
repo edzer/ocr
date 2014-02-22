@@ -1,0 +1,32 @@
+#! /bin/bash
+set -ex
+if test $# -ne 3; then
+ echo $0 script data host
+ exit 1
+fi
+script=$1
+data=$2
+host=$3
+
+# copy files:
+tmpname=`md5sum $script|awk '{print $1}'`
+tmpdir="/tmp/$tmpname"
+
+# create temporary directory on host:
+rsh $host mkdir -p $tmpdir
+
+# 
+cat start_line > script.Rmd
+echo "load($data)" >> script.Rmd
+cat $script >> script.Rmd
+cat end_line >> script.Rmd
+#mv $script 
+
+# copy script and data:
+scp -q knit.R script.Rmd $data $host:$tmpdir
+rsh $host "(cd $tmpdir; R --no-save < knit.R > script.Rout)"
+scp -q $host:$tmpdir/script.Rout .
+scp -q $host:$tmpdir/script.html .
+
+# remove temporary files and dir on host:
+rsh $host "rm -fr $tmpdir"
